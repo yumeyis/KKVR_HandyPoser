@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>KKVR_HandyPoser</AssemblyName>
+    <RootNamespace>KKVR_HandyPoser</RootNamespace>
+    <Description>Pose characters directly with your VR controllers in Koikatsu official VR.</Description>
+    <IsGamePlugin>true</IsGamePlugin>
+  </PropertyGroup>
+
+  <!-- Public reference packages -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="IllusionLibs.BepInEx" Version="5.4.22" PrivateAssets="all" />
+    <PackageReference Include="IllusionLibs.BepInEx.Harmony" Version="2.9.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Game assemblies from the official VR executable (see Directory.Build.props) -->
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(KKVRManagedDir)Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>$(KKVRManagedDir)Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(KKVRManagedDir)UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(KKVRManagedDir)UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

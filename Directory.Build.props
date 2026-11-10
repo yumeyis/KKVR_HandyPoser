@@ -1,0 +1,54 @@
+<Project>
+  <!--
+    Shared build settings for every project in this repository.
+
+    Per-developer settings (e.g. the path to your Koikatsu install) belong in
+    Directory.Build.user.props, which is git-ignored. Copy
+    Directory.Build.user.props.example to get started.
+  -->
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Build.user.props"
+          Condition="Exists('$(MSBuildThisFileDirectory)Directory.Build.user.props')" />
+
+  <PropertyGroup>
+    <Version>0.1.0</Version>
+    <Authors>yumeyis</Authors>
+    <Product>KKVR_HandyPoser</Product>
+    <Copyright>Copyright (c) 2026 yumeyis</Copyright>
+    <RepositoryUrl>https://github.com/yumeyis/KKVR_HandyPoser</RepositoryUrl>
+
+    <!-- Koikatsu runs on Unity 5.6 / Mono with the .NET 3.5 profile -->
+    <TargetFramework>net35</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <Deterministic>true</Deterministic>
+    <DebugType>embedded</DebugType>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <OutputPath>$(MSBuildThisFileDirectory)bin\$(Configuration)\</OutputPath>
+
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+    <DistDir>$(RepoRoot)dist\</DistDir>
+  </PropertyGroup>
+
+  <!--
+    Where to find the official-VR game assemblies (Assembly-CSharp etc.).
+    These are NOT available on NuGet because the VR executable ships its own
+    Assembly-CSharp.dll that contains VRHScene / VRViveController / SteamVR.
+
+    Resolution order:
+      1. KKVRManagedDir set explicitly (Directory.Build.user.props or /p:)
+      2. $(KKDir)\Koikatsu Party VR_Data\Managed   (Steam / Koikatsu Party)
+      3. $(KKDir)\KoikatuVR_Data\Managed           (JP / DLsite release)
+      4. <repo>\lib\                               (copy via tools/copy-game-libs.*)
+  -->
+  <PropertyGroup Condition="'$(KKVRManagedDir)' == '' And '$(KKDir)' != '' And Exists('$(KKDir)\Koikatsu Party VR_Data\Managed')">
+    <KKVRManagedDir>$(KKDir)\Koikatsu Party VR_Data\Managed\</KKVRManagedDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(KKVRManagedDir)' == '' And '$(KKDir)' != '' And Exists('$(KKDir)\KoikatuVR_Data\Managed')">
+    <KKVRManagedDir>$(KKDir)\KoikatuVR_Data\Managed\</KKVRManagedDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(KKVRManagedDir)' == ''">
+    <KKVRManagedDir>$(RepoRoot)lib\</KKVRManagedDir>
+  </PropertyGroup>
+</Project>

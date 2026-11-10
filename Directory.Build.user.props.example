@@ -1,0 +1,18 @@
+<Project>
+  <!--
+    Copy this file to Directory.Build.user.props (git-ignored) and adjust.
+
+    KKDir: the folder that contains the game executables and the BepInEx folder.
+    When set, the build references the VR assemblies straight from the game and
+    copies the built DLL into BepInEx\plugins\KKVR_HandyPoser\ automatically.
+  -->
+  <PropertyGroup>
+    <KKDir>C:\Illusion\Koikatsu Party</KKDir>
+
+    <!-- Optional: override the managed folder explicitly -->
+    <!-- <KKVRManagedDir>C:\Illusion\Koikatsu Party\Koikatsu Party VR_Data\Managed\</KKVRManagedDir> -->
+
+    <!-- Optional: disable auto-deploy into the game folder -->
+    <!-- <DeployToGame>false</DeployToGame> -->
+  </PropertyGroup>
+</Project>

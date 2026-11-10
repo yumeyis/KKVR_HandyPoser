@@ -1,0 +1,7 @@
+{
+  "dotnet.defaultSolution": "KKVR_HandyPoser.sln",
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true
+  }
+}

@@ -1,0 +1,19 @@
+# Full compilation needs the proprietary game assemblies (see docs/DEVELOPMENT.md),
+# which cannot be stored in the repository, so CI only checks formatting.
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Check whitespace / formatting
+        run: dotnet format whitespace --folder --verify-no-changes --verbosity diagnostic

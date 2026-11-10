@@ -1,0 +1,27 @@
+<Project>
+  <!-- Fail early with a helpful message if the game assemblies are missing. -->
+  <Target Name="CheckGameAssemblies" BeforeTargets="ResolveAssemblyReferences" Condition="'$(IsGamePlugin)' == 'true'">
+    <Error Condition="!Exists('$(KKVRManagedDir)Assembly-CSharp.dll')"
+           Text="Game assemblies not found in '$(KKVRManagedDir)'. Set KKDir in Directory.Build.user.props, or run tools/copy-game-libs.ps1 (Windows) / tools/copy-game-libs.sh (Linux). See docs/DEVELOPMENT.md." />
+  </Target>
+
+  <!-- Copy the plugin into the game after every build when KKDir is configured. -->
+  <Target Name="DeployToGame" AfterTargets="Build"
+          Condition="'$(IsGamePlugin)' == 'true' And '$(KKDir)' != '' And '$(DeployToGame)' != 'false'">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(KKDir)\BepInEx\plugins\$(AssemblyName)\" SkipUnchangedFiles="true" />
+    <Message Importance="high" Text="Deployed $(TargetFileName) -> $(KKDir)\BepInEx\plugins\$(AssemblyName)\" />
+  </Target>
+
+  <!-- Build a release zip that can be extracted straight into the game folder. -->
+  <Target Name="PackageRelease" AfterTargets="Build"
+          Condition="'$(IsGamePlugin)' == 'true' And '$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <_StageDir>$(DistDir)staging\$(AssemblyName)\</_StageDir>
+      <_ZipPath>$(DistDir)$(AssemblyName)_v$(Version).zip</_ZipPath>
+    </PropertyGroup>
+    <RemoveDir Directories="$(_StageDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(_StageDir)BepInEx\plugins\$(AssemblyName)\" />
+    <ZipDirectory SourceDirectory="$(_StageDir)" DestinationFile="$(_ZipPath)" Overwrite="true" />
+    <Message Importance="high" Text="Release package: $(_ZipPath)" />
+  </Target>
+</Project>

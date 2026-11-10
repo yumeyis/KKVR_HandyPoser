@@ -1,0 +1,56 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please fill in as much as you can.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start an H scene in VR (map / position: ...)
+        2. Grab the left hand with the grip button
+        3. ...
+  - type: input
+    id: plugin-version
+    attributes:
+      label: KKVR_HandyPoser version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: dropdown
+    id: game
+    attributes:
+      label: Game edition
+      options:
+        - Koikatsu Party (Steam) + Koikatsu Party VR
+        - Koikatu (JP) + KoikatuVR
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: hfpatch
+    attributes:
+      label: HF Patch version
+      placeholder: e.g. 3.x
+  - type: input
+    id: headset
+    attributes:
+      label: Headset / controllers
+      placeholder: e.g. Quest 3 via SteamVR Link, Index, Vive
+  - type: textarea
+    id: log
+    attributes:
+      label: BepInEx log
+      description: Attach or paste `BepInEx/LogOutput.log` (relevant part is fine).
+      render: text
